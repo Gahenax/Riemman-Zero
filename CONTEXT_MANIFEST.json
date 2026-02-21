@@ -1,0 +1,45 @@
+{
+    "project_name": "RSH-Riemann-Latido",
+    "repo": "Gahenax/Riemman-Zero",
+    "research_type": "Null-factory / baseline audit",
+    "epistemic_stage": "VERDICT_PENDING",
+    "claims": [
+        "Sigma2(10) in gauge gap_mean1 is suppressed vs GUE (z=-16.4, micro-probe, 5 GUE sims, NON-FINAL)"
+    ],
+    "non_claims": [
+        "No claim about Riemann Hypothesis",
+        "No final result (null not calibrated, power insufficient)",
+        "r-tilde hyper-rigidity RETRACTED (baseline error corrected)",
+        "No peer review or publication readiness claimed"
+    ],
+    "null_status": "PENDING_CALIBRATION",
+    "null_pipeline_symmetric": true,
+    "null_method": "GUE Dumitriu-Edelman beta=2 tridiagonal",
+    "null_sims_completed": 5,
+    "null_sims_required": 300,
+    "null_edge_trim_calibrated": false,
+    "dataset": {
+        "source": "mpmath.zetazero() (arbitrary precision)",
+        "N": 2054,
+        "N_certified": 2000,
+        "T_range": [
+            5000.19,
+            6319.32
+        ],
+        "format": "JSONL",
+        "field": "T",
+        "contiguous": true
+    },
+    "dependencies_pending": [
+        "Jules: calibrate_rtilde_target.py (GUE baseline lock)",
+        "Jules: certified replay full (300 GUE + 800 shuffle sims)",
+        "Jules: null factory standalone cross-check",
+        "Jules: GUE3 TwoNN k=5 characterization"
+    ],
+    "allowed_interpretation": "Preliminary evidence of long-range counting rigidity in Riemann zeros, pending full null factory confirmation",
+    "forbidden_interpretation": "Confirmed anomaly, proof of anything about RH, or final scientific result",
+    "push_status": "BLOCK",
+    "block_reason": "Null not calibrated (edge_trim=0.0 default). Full sims not executed (5/300). Results are NON-FINAL.",
+    "generated": "2026-02-20T19:04:00-05:00",
+    "generator": "Antigravity Context Inference Audit"
+}
