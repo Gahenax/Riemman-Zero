@@ -1,3 +1,9 @@
+import sys
+import os
+# Setup relative src config loading for subdirectories
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+import src.config
+
 
 import os
 import sys
@@ -6,7 +12,7 @@ from pathlib import Path
 # Jules Environment Configuration
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.append(str(PROJECT_ROOT))
-JULES_PLAYGROUND = Path(r"c:\Users\USUARIO\.gemini\antigravity\playground\calculo-avanzado-asistido")
+JULES_PLAYGROUND = Path(str(src.config.ENGINE_ROOT))
 sys.path.append(str(JULES_PLAYGROUND))
 sys.path.append(str(JULES_PLAYGROUND / "core"))
 

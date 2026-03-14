@@ -1,0 +1,9 @@
+{
+  "alpha": 0.5,
+  "beta": 0.1,
+  "gamma": 0.2,
+  "delta": 0.05,
+  "steps": 2000,
+  "seed": 42,
+  "outdir": "results/sweep/a0.5_g0.2_b0.1_d0.05"
+}

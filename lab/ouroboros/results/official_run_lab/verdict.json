@@ -1,0 +1,6 @@
+{
+  "verdict": "RED",
+  "cycle_detection_score": -0.01797682233392323,
+  "is_cycle": false,
+  "summary": "System state: RED. Peak autocorrelation: -0.0180"
+}

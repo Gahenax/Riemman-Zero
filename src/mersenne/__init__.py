@@ -1,0 +1,1 @@
+# Initialize mersenne logic

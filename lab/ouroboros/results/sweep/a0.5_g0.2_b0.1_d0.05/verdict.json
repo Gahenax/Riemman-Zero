@@ -1,0 +1,6 @@
+{
+  "verdict": "GREEN",
+  "cycle_detection_score": 0.7114860853469964,
+  "is_cycle": true,
+  "summary": "System state: GREEN. Peak autocorrelation: 0.7115"
+}
