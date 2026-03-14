@@ -1,1 +1,46 @@
-__pycache__/
+# Python
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.egg
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Variables de entorno
+.env
+.env.*
+
+# Node / React (web/)
+node_modules/
+dist/
+build/
+.parcel-cache/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales / editor
+*.tmp
+*.bak
+*.swp
+*~
+
+# Archivos de dedup del ledger writer (generados en runtime)
+*.dedup
+
+# Logs
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
