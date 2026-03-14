@@ -1,0 +1,22 @@
+# Gahenax Riemann-Zero — dependencias de produccion
+# Instalar con: pip install -r requirements.txt
+
+# Computacion numerica (core)
+numpy>=1.24
+scipy>=1.10
+mpmath>=1.3
+pandas>=2.0
+
+# Visualizacion
+matplotlib>=3.7
+
+# Reportes
+openpyxl>=3.1
+
+# --- Opcionales (HPC / distribuido) ---
+# mpi4py>=3.1       # Para scripts/supercomputing/
+# mlflow>=2.0       # Para riemann_auditable_wrapper.py
+
+# --- Desarrollo ---
+# pytest>=7.0
+# ruff>=0.0.287
