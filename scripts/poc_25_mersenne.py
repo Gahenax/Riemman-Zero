@@ -8,14 +8,18 @@ Uses the statistic S(u) = sum_gamma w(gamma)*exp(i*gamma*u) with
 phase-randomization null, on the Phase-1 dataset (N=332).
 """
 from __future__ import annotations
-import sys, io
+import sys
+import io
+from pathlib import Path
 
-import json, math, os
+import json
+import math
+import os
 import numpy as np
 from scipy.special import erfc
 
-PROJECT = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis"
-import sys; sys.path.insert(0, os.path.join(PROJECT, "scripts"))
+PROJECT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT / "scripts"))
 from mersenne_spectral_poc import (
     S_of_u, null_distribution, auc_score,
     load_phase1_zeros, WINDOW_MODE, B_NULL,
@@ -42,7 +46,7 @@ CTRL25 = [
 
 # ── Dataset ───────────────────────────────────────────────────────────────────
 gammas = load_phase1_zeros(
-    os.path.join(PROJECT, "results", "riemann", "jules_phase1_full.jsonl")
+    str(PROJECT / "results" / "riemann" / "jules_phase1_full.jsonl")
 )
 T0, T1  = float(gammas[0]), float(gammas[-1])
 N       = len(gammas)
@@ -83,9 +87,11 @@ z_arr  = np.array([r["z"] for r in all_rows])
 p_vals = 0.5 * erfc(z_arr / math.sqrt(2))
 n      = len(p_vals)
 order  = np.argsort(p_vals)
-q      = np.empty(n)
-q[order] = p_vals[order] * n / (np.arange(1, n+1))
-q = np.minimum.accumulate(q[::-1])[::-1]
+ranked_q = p_vals[order] * n / np.arange(1, n + 1)
+ranked_q = np.minimum.accumulate(ranked_q[::-1])[::-1]
+ranked_q = np.clip(ranked_q, 0.0, 1.0)
+q = np.empty(n)
+q[order] = ranked_q
 for i, r in enumerate(all_rows):
     r["q"] = round(float(q[i]), 4)
 
@@ -130,8 +136,10 @@ print(f"\n{'='*76}")
 print(f"  AUC ANALYSIS")
 print(f"{'='*76}")
 print(f"  AUC global (25 vs 25):              {auc_score(pos_all, neg_all):.4f}")
-print(f"  AUC k<=127  (primeros 12 MP):       "
-      f"{auc_score(grp('mersenne_prime',1,127), neg_all):.4f}")
+small_pos = grp("mersenne_prime", 1, 127)
+small_neg = grp("control", 1, 127)
+print(f"  AUC k<=127  (escala emparejada):     "
+      f"{auc_score(small_pos, small_neg):.4f}")
 print(f"  AUC k in [128..1279] (MP 13-15):    "
       f"{auc_score(grp('mersenne_prime',128,1279), neg_all):.4f}")
 print(f"  AUC k>1279  (MP 16-25, gigantes):   "
@@ -154,10 +162,15 @@ out = {
     "N_zeros": N, "T0": T0, "T1": T1,
     "MP25": MP25, "CTRL25": CTRL25,
     "auc_global": round(auc_score(pos_all, neg_all), 4),
-    "auc_k_le_127": round(auc_score(grp("mersenne_prime",1,127), neg_all), 4),
+    "auc_k_le_127": round(auc_score(small_pos, small_neg), 4),
+    "experimental_position": (
+        "Supervised calibration on known labels; proof of concept only, "
+        "not blind validation or a primality certificate."
+    ),
     "rows": all_rows,
 }
-out_path = os.path.join(PROJECT, "results", "riemann", "poc_25_mersenne.json")
-with open(out_path, "w", encoding="utf-8") as f:
+out_path = PROJECT / "results" / "riemann" / "poc_25_mersenne.json"
+out_path.parent.mkdir(parents=True, exist_ok=True)
+with out_path.open("w", encoding="utf-8") as f:
     json.dump(out, f, indent=2)
 print(f"\n  Saved: {out_path}")
